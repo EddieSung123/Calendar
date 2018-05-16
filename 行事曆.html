@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1"
+        crossorigin="anonymous">
+    <style>
+        .mapstyle {
+            width: 468px;
+            height: 400px;
+            border: 1px solid #000000;
+        }
+    </style>
+
+
+</head>
+
+<body style="font-family:微軟正黑體">
+
+    <div class="container-fluid">
+        <div class="row mt-3">
+            <div class="col">
+
+            </div>
+            <div class="col ">
+
+
+            </div>
+            <div class="col">
+                <button text-right type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1">
+                    +新增事項
+                </button>
+
+                <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">新增項目</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <p>日期 </p>
+                                        <input type="date" id="newdate" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                    <div class="col">
+                                        <p>時間</p>
+                                        <input type="time" id="newtime" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p>事項</p>
+                                        <input type="text" id="newevent" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p>顏色</p>
+                                        <input type="color" id="newcolor" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                    <div class="col">
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p>活動地點</p>
+                                        <input type="text" id="newaddress" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary">修改</button>
+                                <button type="button" id="save" class="btn btn-primary">新增</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col text-right">
+                <button type="button" id="LowMonth" class="btn btn-light">
+                    <i class="fas fa-angle-left"></i>
+                </button>
+            </div>
+            <div class="col text-center">
+                <h3 id="month"></h3>
+                <h4 id="year"></h4>
+            </div>
+            <div class="col text-left">
+                <button type="button" id="AddMonth" class="btn btn-light">
+                    <i class="fas fa-angle-right"></i>
+                </button>
+            </div>
+        </div>
+        <div class="row mt-3">
+
+            <div class="col">
+                <table class="table table-bordered" id="Table">
+                    <tr>
+                        <th>MON</th>
+                        <th>TUE</th>
+                        <th>WED</th>
+                        <th>THU</th>
+                        <th>FRI</th>
+                        <th>SAT</th>
+                        <th>SUN</th>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">查看行程</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">日期</span>
+                        </div>
+                        <input type="text" id="searchDate" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">時間</span>
+                        </div>
+                        <input type="text" id="searchTime" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">事項</span>
+                        </div>
+                        <input type="text" id="searchMatter" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+
+                    <div>
+                        <p>
+                            活動地點
+                        </p>
+                        <div id="map" class="mapstyle">
+                            並無設定地點
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                    <button type="button" class="btn btn-primary" id="delete">刪除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+        function initMap() { };
+        var todayM = new Date().getMonth() + 1;
+        var todayY = new Date().getFullYear();
+        document.getElementById("month").innerText = todayM;
+        document.getElementById("year").innerText = todayY;
+        var month = document.getElementById("month").innerText;
+        var year = document.getElementById("year").innerText;
+        var GetFIRSTdayweek = FIRSTday(year, month);
+        var GetMonthdays = MONTHdays(year, month);
+        Calendar(year, month, GetFIRSTdayweek, GetMonthdays);
+        var map;
+
+
+        function _uuid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) { var r = Math.random() * 16 | 0, v = c == 'x' ? r : r & 0x3 | 0x8; return v.toString(16); });
+        }
+
+        var save = document.getElementById("save");
+        save.onclick = function () {
+            var dd = document.getElementById("newdate").value;
+            var Arr = dd.split("-");
+            var y = Arr[0];
+            var m = Arr[1];
+            var d = Arr[2];
+
+            var _Date = {
+                Year: y,
+                Month: m,
+                Days: d,
+                Times: newtime.value,
+                Texts: newevent.value,
+                color: newcolor.value,
+                Location: newaddress.value
+            }
+
+            localStorage.setItem(_uuid(), JSON.stringify(_Date));
+            location.reload();
+            //localStorage.clear();
+        }
+
+
+        function ClearTable() {
+            for (var i = 1; i < 7; i++) {
+                document.getElementById("Table").deleteRow(1);
+            }
+        }
+
+        function Add() {
+            todayM = todayM + 1;
+            if (todayM > 12) {
+                todayM = 1;
+                todayY = todayY + 1;
+            }
+            document.getElementById("month").innerText = todayM;
+            document.getElementById("year").innerText = todayY;
+        }
+
+        function Low() {
+            todayM = todayM - 1;
+            if (todayM < 1) {
+                todayM = 12;
+                todayY = todayY - 1;
+            }
+            document.getElementById("month").innerText = todayM;
+            document.getElementById("year").innerText = todayY;
+        }
+
+        function MONTHdays(year, month) {
+            var Monthdays = new Date(year, month, 0);
+            var GetMonthdays = Monthdays.getDate();
+            return GetMonthdays;//當月有幾天
+        }
+
+        function FIRSTday(year, month) {
+            var firstday = new Date(year, month - 1, 1);
+            var GetFIRSTdayweek = firstday.getDay();
+            return GetFIRSTdayweek;//當月的第一天禮拜幾
+        }
+
+        function Make_Map(address) {
+
+            $.ajax({
+                url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyBKlqdsa2gBOYiQ2TB9-Nn4HAoSVT9NCd0',
+                type: 'GET',
+                async: false
+            }).done(function (data) {
+
+                map = new google.maps.Map(
+                    document.getElementById('map'), {
+                        center: { lat: data.results[0].geometry.location.lat, lng: data.results[0].geometry.location.lng },
+                        zoom: 15
+                    });
+
+                var marker = new google.maps.Marker({
+                    position: { lat: data.results[0].geometry.location.lat, lng: data.results[0].geometry.location.lng },
+                    map: map,
+                    title: '在這裡~'
+                });
+            });
+
+        }
+
+
+        var item;
+        function local(i, year, month, input2_) {
+
+            for (var a in localStorage) {
+                if (a == "length") break;
+                item = JSON.parse(localStorage[a]);
+                var itemYear = parseInt(item.Year, 10);
+                var itemMonth = parseInt(item.Month, 10);
+                var itemDays = parseInt(item.Days, 10);
+
+                if (itemYear == year && itemMonth == month && itemDays == input2_) {
+                    var li = document.createElement("li");
+                    li.className = 'list-group-item btn';
+                    li.style.width = "125px";
+                    li.style.height = "40px";
+                    li.style.fontSize = "13px";
+                    li.style.backgroundColor = item.color;
+
+                    li.id = a;
+                    li.innerText = item.Times + "" + item.Texts;
+                    //刪除與查詢事項
+                    li.onclick = function () {
+                        $("#exampleModal").modal("show");//跳出modal
+                        var _id = this.id;
+                        var item2 = JSON.parse(localStorage[_id]);
+                        document.getElementById("delete").value = _id;//取得li的id
+                        document.getElementById("searchDate").value = item2.Year + "年" + item2.Month + "月" + item2.Days + "日";
+                        document.getElementById("searchTime").value = item2.Times;
+                        document.getElementById("searchMatter").value = item2.Texts;
+
+                        var _address = item2.Location;
+                        if(_address!=null){
+                            Make_Map(_address);
+                        }
+                    }
+                    var ul = document.createElement("ul");
+                    ul.appendChild(li);
+                    //if沒有ul才加
+                    i.appendChild(ul);
+                }
+            }
+        }
+
+        document.getElementById("delete").onclick = function () {
+            console.log(this.value);
+            localStorage.removeItem(this.value);
+            location.reload();
+        }
+
+        function Calendar(year, month, GetFIRSTdayweek, GetMonthdays) {
+            var Today = new Date().getDate(); //今天日期
+            var input = 1;
+            var input2 = 1;
+            var T = 2 - GetFIRSTdayweek;
+            var da = 0;
+            var table = document.querySelector("table");
+            for (var i = 1; i < 7; i++) {
+                var row = document.createElement("tr");
+                row.style.height = "150px";
+
+                for (var j = 1; j < 8; j++) {
+                    var col = document.createElement("td");
+                    col.style.width = "170px";
+
+                    if (GetFIRSTdayweek == 0) {
+                        GetFIRSTdayweek = 7;
+                        T = 2 - GetFIRSTdayweek;
+                    }
+                    if (input < GetFIRSTdayweek || input2 > GetMonthdays) {
+                        input++;
+                        var TT = new Date(year, month - 1, T);
+                        col.className = "text-muted";
+                        col.innerText = TT.getDate();
+                        T = T + 1;
+                        row.appendChild(col);
+
+                    } else {
+                        if (input2 == Today) {
+                            col.className = "bg-danger";
+                            col.innerText = input2;
+                            local(col, year, month, input2);
+                            input2++;
+                            //var _ul = document.createElement("ul");
+                            row.appendChild(col);
+                        } else {
+                            col.innerText = input2;
+                            local(col, year, month, input2);
+                            input2++;
+                            //var _ul = document.createElement("ul");
+                            row.appendChild(col);
+                        }
+                    }
+                }
+                table.appendChild(row);
+            }
+        }
+
+
+        var LowMonth = document.getElementById("LowMonth");//左邊buttton
+        LowMonth.onclick = function () {
+            ClearTable();
+            Low();
+            var month = document.getElementById("month").innerText;
+            var year = document.getElementById("year").innerText;
+            var GetFIRSTdayweek = FIRSTday(year, month);
+            var GetMonthdays = MONTHdays(year, month);
+            Calendar(year, month, GetFIRSTdayweek, GetMonthdays);
+        }
+
+
+        var AddMonth = document.getElementById("AddMonth");//右邊button
+        AddMonth.onclick = function () {
+            ClearTable();
+            Add();
+            var month = document.getElementById("month").innerText;
+            var year = document.getElementById("year").innerText;
+            var GetFIRSTdayweek = FIRSTday(year, month);
+            var GetMonthdays = MONTHdays(year, month);
+            Calendar(year, month, GetFIRSTdayweek, GetMonthdays);
+        }
+
+
+
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDH4XvTj9kOJVJrmRouxwTiCjnV53Y5O7o&callback=initMap" async
+        defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
