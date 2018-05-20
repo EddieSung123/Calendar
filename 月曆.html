@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1"
+    crossorigin="anonymous">
+
+</head>
+
+<body>
+
+  <div class="container">
+   
+    <div class="row mt-3">
+      <div class="col text-right">
+        <button type="button" id="LowMonth" class="btn btn-light">
+          <i class="fas fa-angle-left"></i>
+        </button>
+      </div>
+      <div class="col text-center">
+        <h3 id="month"></h3>
+        <h4 id="year"></h4>
+      </div>
+      <div class="col text-left">
+        <button type="button" id="AddMonth" class="btn btn-light">
+          <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+
+      </div>
+      <div class="col">
+        <table class="table table-bordered" id="Table">
+          <tr>
+            <th>MON</th>
+            <th>TUE</th>
+            <th>WED</th>
+            <th>THU</th>
+            <th>FRI</th>
+            <th>SAT</th>
+            <th>SUN</th>
+          </tr>
+        </table>
+      </div>
+      <div class="col">
+
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    var todayM = new Date().getMonth() + 1;
+    var todayY = new Date().getFullYear();
+    document.getElementById("month").innerText = todayM;
+    document.getElementById("year").innerText = todayY;
+    var month = document.getElementById("month").innerText;
+    var year = document.getElementById("year").innerText;
+    var GetFIRSTdayweek = FIRSTday(year, month);
+    var GetMonthdays = MONTHdays(year, month);
+    Calendar(year, month, GetFIRSTdayweek, GetMonthdays);
+
+    function ClearTable() {
+      for (var i = 1; i < 7; i++) {
+        document.getElementById("Table").deleteRow(1);
+      }
+    }
+
+    function Add() {
+      todayM = todayM + 1;
+      if (todayM > 12) {
+        todayM = 1;
+        todayY = todayY + 1;
+      }
+      document.getElementById("month").innerText = todayM;
+      document.getElementById("year").innerText = todayY;
+    }
+
+    function Low() {
+      todayM = todayM - 1;
+      if (todayM < 1) {
+        todayM = 12;
+        todayY = todayY - 1;
+      }
+      document.getElementById("month").innerText = todayM;
+      document.getElementById("year").innerText = todayY;
+    }
+
+    function MONTHdays(year, month) {
+      var Monthdays = new Date(year, month, 0);
+      var GetMonthdays = Monthdays.getDate();
+      return GetMonthdays;//當月有幾天
+    }
+
+    function FIRSTday(year, month) {
+      var firstday = new Date(year, month - 1, 1);
+      var GetFIRSTdayweek = firstday.getDay();
+      return GetFIRSTdayweek;//當月的第一天禮拜幾
+    }
+
+    function Calendar(year, month, GetFIRSTdayweek, GetMonthdays) {
+      var Today = new Date().getDate(); //今天日期
+      var input = 1;
+      var input2 = 1;
+      var T = 2 - GetFIRSTdayweek;
+      var table = document.querySelector("table");
+      for (var i = 1; i < 7; i++) {
+        var row = document.createElement("tr");
+        for (var j = 1; j < 8; j++) {
+          var col = document.createElement("td");
+          if (GetFIRSTdayweek == 0) {
+            GetFIRSTdayweek = 7;
+            T = 2 - GetFIRSTdayweek;
+          }
+          if (input < GetFIRSTdayweek || input2 > GetMonthdays) {
+            input++;
+            var TT = new Date(year, month - 1, T);
+            col.className = "text-muted";
+            col.innerText = TT.getDate();
+            T = T + 1;
+            row.appendChild(col);
+          } else {
+            if (input2 == Today) {
+              col.className = "bg-danger";
+              col.innerText = input2;
+              input2++;
+              row.appendChild(col);
+            } else {
+              col.innerText = input2;
+              input2++;
+              row.appendChild(col);
+            }
+          }
+        }
+        table.appendChild(row);
+      }
+    }
+
+    var LowMonth = document.getElementById("LowMonth");//左邊buttton
+    LowMonth.onclick = function () {
+      ClearTable();
+      Low();
+      var month = document.getElementById("month").innerText;
+      var year = document.getElementById("year").innerText;
+      var GetFIRSTdayweek = FIRSTday(year, month);
+      var GetMonthdays = MONTHdays(year, month);
+      Calendar(year, month, GetFIRSTdayweek, GetMonthdays);
+    }
+
+
+    var AddMonth = document.getElementById("AddMonth");//右邊button
+    AddMonth.onclick = function () {
+      ClearTable();
+      Add();
+      var month = document.getElementById("month").innerText;
+      var year = document.getElementById("year").innerText;
+      var GetFIRSTdayweek = FIRSTday(year, month);
+      var GetMonthdays = MONTHdays(year, month);
+      Calendar(year, month, GetFIRSTdayweek, GetMonthdays);
+    }
+
+
+
+  </script>
+
+
+</body>
+
+</html>
